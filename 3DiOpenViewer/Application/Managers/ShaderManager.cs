@@ -44,10 +44,12 @@ namespace OpenViewer.Managers
         public enum ShaderType
         {
             Sky,
+#if !LINUX
             AdvancedSea,
             Sea,
             Shadow,
-
+#endif
+			
             Count,
         }
 
@@ -139,7 +141,7 @@ namespace OpenViewer.Managers
                         shader = new Sky(Reference.Viewer, ParentNode);
                     }
                     break;
-
+#if !LINUX
                 case ShaderType.Sea:
                     if (Reference.Viewer.IsDrawSea)
                     {
@@ -161,13 +163,14 @@ namespace OpenViewer.Managers
                     {
                     }
                     break;
+#endif
             }
 
             int res = -1;
             if (shader != null)
             {
                 // Load shader.
-                //Reference.Device.FileSystem.WorkingDirectory = Util.ApplicationDataDirectory + @"\media";
+                //Reference.Device.FileSystem.WorkingDirectory = Util.ApplicationDataDirectory + @"/media";
                 res = shader.Load();
                 if (res > 0)
                 {
